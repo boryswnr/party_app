@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import HomePage from "./HomePage";
 
 const App = () => {
-  return <h1>Testing React code</h1>;
+    return (
+        <div>
+            <HomePage />
+        </div>
+    );
 };
 
 export default App;
