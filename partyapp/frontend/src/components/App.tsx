@@ -1,13 +1,14 @@
 import React from "react";
+import CreateRoom from "./CreateRoom";
+import JoinRoom from "./JoinRoom";
+import ReactRouter from "./ReactRouter";
 
 const App = () => {
     return (
         <>
-            <h1>This is App.tsx</h1>
-            <p>
-                <br />
-            </p>
-            <h1>Testing React code</h1>
+            <JoinRoom />
+            <p>This is paragraph of text</p>
+            <CreateRoom />
         </>
     );
 };
