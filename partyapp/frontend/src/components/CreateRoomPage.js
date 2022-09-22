@@ -3,7 +3,7 @@ import React from "react";
 const CreateRoomPage = () => {
     return (
         <>
-            <p>This is home create room page</p>
+            <p>This is create room page</p>
         </>
     );
 };
