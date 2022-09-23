@@ -6,8 +6,8 @@ import ReactRouter from "./ReactRouter";
 const App = () => {
     return (
         <>
-            <JoinRoom />
-            <p>This is paragraph of text</p>
+            {/* <JoinRoom /> */}
+            {/* <p>This is paragraph of text</p> */}
             <CreateRoom />
         </>
     );

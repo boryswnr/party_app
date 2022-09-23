@@ -1,9 +1,10 @@
 import React from "react";
+import CreateRoom from "./CreateRoom";
+import JoinRoom from "./JoinRoom";
 const App = () => {
     return (React.createElement(React.Fragment, null,
-        React.createElement("h1", null, "This is App.tsx"),
-        React.createElement("p", null,
-            React.createElement("br", null)),
-        React.createElement("h1", null, "Testing React code")));
+        React.createElement(JoinRoom, null),
+        React.createElement("p", null, "This is paragraph of text"),
+        React.createElement(CreateRoom, null)));
 };
 export default App;
