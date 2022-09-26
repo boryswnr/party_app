@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Button,
     Typography,
@@ -29,6 +30,8 @@ const CreateRoom = () => {
             : setGuestCanPause(false);
     };
 
+    const navigate = useNavigate();
+
     const handleRoomButtonPressed = () => {
         const requestOptions = {
             method: "POST",
@@ -40,7 +43,7 @@ const CreateRoom = () => {
         };
         fetch("/api/create-room", requestOptions)
             .then((response) => response.json())
-            .then((data) => console.log(data));
+            .then((data) => navigate("/room/" + data.code));
     };
 
     return (

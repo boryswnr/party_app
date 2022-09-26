@@ -1,15 +1,12 @@
 import React from "react";
-import CreateRoom from "./CreateRoom";
-import JoinRoom from "./JoinRoom";
-import ReactRouter from "./ReactRouter";
+import HomePage from "./HomePage";
+import { BrowserRouter as Router } from "react-router-dom";
 
 const App = () => {
     return (
-        <>
-            {/* <JoinRoom /> */}
-            {/* <p>This is paragraph of text</p> */}
-            <CreateRoom />
-        </>
+        <Router>
+            <HomePage />
+        </Router>
     );
 };
 
