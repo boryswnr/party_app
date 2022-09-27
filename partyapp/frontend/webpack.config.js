@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: "./src/index.tsx",
     output: {
         path: path.resolve(__dirname, "./static/frontend"),
         filename: "[name].js",
@@ -10,13 +10,15 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.tsx?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                },
+                // use: { loader: "babel-loader" },
+                use: "ts-loader",
             },
         ],
+    },
+    resolve: {
+        extensions: [".tsx", ".ts", ".js"],
     },
     optimization: {
         minimize: true,

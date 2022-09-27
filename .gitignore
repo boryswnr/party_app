@@ -1,1 +1,6 @@
+# Django secret key
 key.txt
+# compiled TS files
+partyapp/frontend/static/frontend/main.js.LICENSE.txt
+partyapp/frontend/static/frontend/*.js
+partyapp/frontend/static/frontend/*/*.js
