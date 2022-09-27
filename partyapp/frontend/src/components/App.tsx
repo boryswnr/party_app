@@ -1,7 +1,8 @@
 import React from "react";
-import HomePage from "./HomePage";
+import HomePage from "../pages/HomePage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Box } from "@mui/system";
+import ReactRouter from "./ReactRouter";
 
 const App = () => {
     return (
@@ -14,7 +15,7 @@ const App = () => {
                     transform: "translate(-50%, -50%)",
                 }}
             >
-                <HomePage />
+                <ReactRouter />
             </Box>
         </Router>
     );

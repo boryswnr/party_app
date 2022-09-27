@@ -1,19 +1,8 @@
 import React from "react";
 import App from "./components/App";
-import HomePage from "./components/HomePage";
+import HomePage from "./pages/HomePage";
 import { createRoot } from "react-dom/client";
 
-function Index() {
-    return (
-        <>
-            <h1>This is index.tsx</h1>
-            <App />
-            <HomePage />
-        </>
-    );
-}
-
-export default Index;
 const divApp = document.getElementById("app");
 const root = createRoot(divApp!);
 root.render(<App />);
