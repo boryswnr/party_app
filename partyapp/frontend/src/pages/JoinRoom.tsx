@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import { Box } from "@mui/system";
 import { Button, TextField, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const JoinRoom = () => {
     const [roomCode, setRoomCode] = useState("");
@@ -63,7 +63,12 @@ const JoinRoom = () => {
                 Enter room
             </Button>
 
-            <Button variant="contained" color="secondary" href="/">
+            <Button
+                variant="contained"
+                color="secondary"
+                to="/"
+                component={Link}
+            >
                 Back
             </Button>
         </Box>

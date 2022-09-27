@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     Button,
     Typography,
@@ -114,7 +114,12 @@ const CreateRoom = () => {
                 >
                     Create a Room
                 </Button>
-                <Button color="secondary" variant="contained" href="/">
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    to="/"
+                    component={Link}
+                >
                     Back
                 </Button>
             </Box>

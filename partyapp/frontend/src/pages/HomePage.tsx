@@ -1,14 +1,29 @@
 import React from "react";
-import CreateRoom from "./CreateRoom";
-import JoinRoom from "./JoinRoom";
-import Room from "./Room";
-import { Routes, Route } from "react-router-dom";
+import { Box } from "@mui/system";
+import { Button, ButtonGroup, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function HomePage() {
     return (
-        <>
-            <h1>This is Homepage</h1>
-        </>
+        <Box>
+            <Box>
+                <Typography variant="h3">House party</Typography>
+            </Box>
+            <Box>
+                <ButtonGroup
+                    disableElevation
+                    variant="contained"
+                    color="primary"
+                >
+                    <Button color="primary" to="/join" component={Link}>
+                        Join a room
+                    </Button>
+                    <Button color="secondary" to="/create" component={Link}>
+                        Create a room
+                    </Button>
+                </ButtonGroup>
+            </Box>
+        </Box>
     );
 }
 
