@@ -24,7 +24,7 @@ const Room = () => {
     return (
         <div>
             <h3>{roomCode}</h3>
-            <p>This is Room copmponent</p>
+            <p>This is Room component</p>
             <p>Votes to skip: {votesToSkip}</p>
             <p>Guests can pause: {guestCanPause ? "Yes" : " No"}</p>
             <p>Host: {isHost ? "Yes" : " No"}</p>
