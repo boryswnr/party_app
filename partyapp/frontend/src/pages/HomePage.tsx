@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { Button, ButtonGroup, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function HomePage() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch("/api/user-in-room")
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.code) {
+                    navigate(`/room/${data.code}`);
+                }
+            });
+    }, []);
+
     return (
         <Box>
             <Box>
