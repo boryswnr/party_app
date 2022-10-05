@@ -7,7 +7,7 @@ type renderCreateButtonsProps = {
 };
 
 type renderUpdateButtonsProps = {
-    handleRoomButtonPressed: () => void;
+    handleUpdateButtonPressed: () => void;
 };
 
 export const RenderCreateButtons = ({
@@ -36,14 +36,14 @@ export const RenderCreateButtons = ({
 };
 
 export const RenderUpdateButtons = ({
-    handleRoomButtonPressed,
+    handleUpdateButtonPressed,
 }: renderUpdateButtonsProps) => {
     return (
         <Button
             sx={{ margin: "0 0 5px 0" }}
             color="primary"
             variant="contained"
-            onClick={handleRoomButtonPressed}
+            onClick={handleUpdateButtonPressed}
         >
             Update a room
         </Button>

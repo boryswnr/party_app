@@ -9,6 +9,8 @@ import {
     RadioGroup,
     FormControlLabel,
     Radio,
+    Alert,
+    Collapse,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import {
@@ -17,15 +19,25 @@ import {
 } from "../components/Buttons";
 
 type CreateRoomProps = {
-    votes: number;
-    pauseRules: boolean;
-    editing: boolean;
+    votes?: number;
+    pauseRules?: boolean;
+    editing?: boolean;
+    code?: string | undefined;
+    updateCallback?: () => void;
 };
 
-const CreateRoom = ({ votes, pauseRules, editing }: CreateRoomProps) => {
+const CreateRoom = ({
+    votes = 2,
+    pauseRules = true,
+    editing = false,
+    code,
+    updateCallback,
+}: CreateRoomProps) => {
     const [guestCanPause, setGuestCanPause] = useState(pauseRules);
     const [votesToSkip, setVotesToSkip] = useState(votes);
     const [editingSettings, setEditingSettings] = useState(editing);
+    const [successMsg, setSuccessMsg] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
 
     const handleVotesChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -57,6 +69,28 @@ const CreateRoom = ({ votes, pauseRules, editing }: CreateRoomProps) => {
             .then((data) => navigate("/room/" + data.code));
     };
 
+    const handleUpdateButtonPressed = () => {
+        const requestOptions = {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                votes_to_skip: votesToSkip,
+                guest_can_pause: guestCanPause,
+                code: code,
+            }),
+        };
+        fetch("/api/update-room", requestOptions).then((response) => {
+            if (response.ok) {
+                setSuccessMsg("Room updated successfully!");
+            } else {
+                setErrorMsg("Error updating room...");
+            }
+            if (updateCallback) {
+                updateCallback();
+            }
+        });
+    };
+
     const editOrCreate = editingSettings ? "Edit a room" : "Create a Room";
 
     return (
@@ -70,6 +104,13 @@ const CreateRoom = ({ votes, pauseRules, editing }: CreateRoomProps) => {
             }}
         >
             <Box>
+                <Collapse in={successMsg !== "" || errorMsg !== ""}>
+                    {successMsg ? (
+                        <Alert severity="success">{successMsg}</Alert>
+                    ) : (
+                        <Alert severity="error">{errorMsg}</Alert>
+                    )}
+                </Collapse>
                 <Typography component="h4" variant="h4">
                     {editOrCreate}
                 </Typography>
@@ -81,7 +122,7 @@ const CreateRoom = ({ votes, pauseRules, editing }: CreateRoomProps) => {
                     </FormHelperText>
                     <RadioGroup
                         row
-                        defaultValue="true"
+                        defaultValue={pauseRules.toString()}
                         onChange={handleGuestCanPauseChange}
                     >
                         <FormControlLabel
@@ -121,7 +162,7 @@ const CreateRoom = ({ votes, pauseRules, editing }: CreateRoomProps) => {
             >
                 {editingSettings ? (
                     <RenderUpdateButtons
-                        handleRoomButtonPressed={handleRoomButtonPressed}
+                        handleUpdateButtonPressed={handleUpdateButtonPressed}
                     />
                 ) : (
                     <RenderCreateButtons

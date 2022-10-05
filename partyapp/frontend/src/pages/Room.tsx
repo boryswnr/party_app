@@ -51,7 +51,13 @@ const Room = () => {
                 }}
             >
                 {/* ADD props to CreateRoom */}
-                <CreateRoom votes={votesToSkip} pauseRules={guestCanPause} editing={showSettings} />
+                <CreateRoom
+                    votes={votesToSkip}
+                    pauseRules={guestCanPause}
+                    editing={showSettings}
+                    code={roomCode}
+                    updateCallback={getRoomDetails}
+                />
                 <Button
                     sx={{ margin: "4px 0 0 0" }}
                     variant="contained"
