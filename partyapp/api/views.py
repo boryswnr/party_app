@@ -112,12 +112,12 @@ class UpdateRoom(APIView):
             votes_to_skip = serializer.data.get('votes_to_skip')
             code = serializer.data.get('code')
 
-            queryset = Room.objects.filter('code')
+            queryset = Room.objects.filter(code=code)
             if not queryset.exists():
                 return Response({"msg": "Room not found"}, status=status.HTTP_400_BAD_REQUEST)
 
             room = queryset[0]
-            user_id = self.requset.session.session_key
+            user_id = self.request.session.session_key
             if room.host != user_id:
                 return Response({"msg": "You are not the host of this room"}, status=status.HTTP_403_FORBIDDEN)
             room.guest_can_pause = guest_can_pause
