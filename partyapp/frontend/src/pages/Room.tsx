@@ -2,12 +2,14 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import CreateRoom from "./CreateRoom";
 
 const Room = () => {
     const { roomCode } = useParams();
     const [votesToSkip, setVotesToSkip] = useState(2);
     const [guestCanPause, setGuestCanPause] = useState(true);
     const [isHost, setIsHost] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
     const navigate = useNavigate();
 
     const getRoomDetails = () => {
@@ -39,15 +41,36 @@ const Room = () => {
         });
     };
 
+    const renderSettings = () => {
+        return (
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    textAlign: "center",
+                }}
+            >
+                {/* ADD props to CreateRoom */}
+                <CreateRoom votes={votesToSkip} pauseRules={guestCanPause} editing={showSettings} />
+                <Button
+                    sx={{ margin: "4px 0 0 0" }}
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                        setShowSettings(false);
+                    }}
+                >
+                    Close
+                </Button>
+            </Box>
+        );
+    };
+
+    if (showSettings) {
+        return renderSettings();
+    }
     return (
-        <Box
-            sx={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                textAlign: "center",
-            }}
-        >
+        <Box>
             <Typography variant="h4">Code: {roomCode}</Typography>
 
             <Typography variant="h6">Votes to skip: {votesToSkip}</Typography>
@@ -57,6 +80,16 @@ const Room = () => {
             </Typography>
 
             <Typography variant="h6">Host: {isHost ? "Yes" : " No"}</Typography>
+
+            {isHost ? (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setShowSettings(true)}
+                >
+                    Settings
+                </Button>
+            ) : null}
 
             <Button
                 variant="contained"

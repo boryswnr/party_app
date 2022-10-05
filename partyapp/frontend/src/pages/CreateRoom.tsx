@@ -11,10 +11,21 @@ import {
     Radio,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import {
+    RenderCreateButtons,
+    RenderUpdateButtons,
+} from "../components/Buttons";
 
-const CreateRoom = () => {
-    const [guestCanPause, setGuestCanPause] = useState(true);
-    const [votesToSkip, setVotesToSkip] = useState(2);
+type CreateRoomProps = {
+    votes: number;
+    pauseRules: boolean;
+    editing: boolean;
+};
+
+const CreateRoom = ({ votes, pauseRules, editing }: CreateRoomProps) => {
+    const [guestCanPause, setGuestCanPause] = useState(pauseRules);
+    const [votesToSkip, setVotesToSkip] = useState(votes);
+    const [editingSettings, setEditingSettings] = useState(editing);
 
     const handleVotesChange = (
         e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,6 +57,8 @@ const CreateRoom = () => {
             .then((data) => navigate("/room/" + data.code));
     };
 
+    const editOrCreate = editingSettings ? "Edit a room" : "Create a Room";
+
     return (
         <Box
             sx={{
@@ -58,7 +71,7 @@ const CreateRoom = () => {
         >
             <Box>
                 <Typography component="h4" variant="h4">
-                    Create A Room
+                    {editOrCreate}
                 </Typography>
             </Box>
             <Box>
@@ -106,25 +119,24 @@ const CreateRoom = () => {
                     flexDirection: "column",
                 }}
             >
-                <Button
-                    sx={{ margin: "0 0 5px 0" }}
-                    color="primary"
-                    variant="contained"
-                    onClick={handleRoomButtonPressed}
-                >
-                    Create a Room
-                </Button>
-                <Button
-                    color="secondary"
-                    variant="contained"
-                    to="/"
-                    component={Link}
-                >
-                    Back
-                </Button>
+                {editingSettings ? (
+                    <RenderUpdateButtons
+                        handleRoomButtonPressed={handleRoomButtonPressed}
+                    />
+                ) : (
+                    <RenderCreateButtons
+                        handleRoomButtonPressed={handleRoomButtonPressed}
+                    />
+                )}
             </Box>
         </Box>
     );
+};
+
+CreateRoom.defaultProps = {
+    votes: 2,
+    pauseRule: true,
+    editing: false,
 };
 
 export default CreateRoom;
