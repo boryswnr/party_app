@@ -10,10 +10,9 @@ from .util import is_spotify_suthenticated, update_or_create_user_tokens
 class AuthURL(APIView):
     def get(self, request, format=None):
         scopes = 'user-read-playback-state user-modify-playback-state user-read-currently-playing'
-        url = Request('GET', 'https://accounts.spotify.com', params={
+        url = Request('GET', 'https://accounts.spotify.com/authorize', params={
             'scope': scopes,
-            'response-type': 
-            'code', 
+            'response_type': 'code', 
             'redirect_uri': REDIRECT_URI, 
             'client_id': CLIENT_ID
             }).prepare().url
@@ -43,7 +42,7 @@ def spotify_callback(request, format=None):
 
     update_or_create_user_tokens(request.session.session_key, access_token, token_type, expires_in, refresh_token)
 
-    return redirect('frontend:')
+    return redirect('')
 
 class IsAuthenticated(APIView):
     def get(self, request, format=None):

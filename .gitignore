@@ -1,5 +1,6 @@
-# Django secret key
+# secrets
 key.txt
+partyapp/spotify/credentials.py
 # compiled TS files
 partyapp/frontend/static/frontend/main.js.LICENSE.txt
 partyapp/frontend/static/frontend/*.js

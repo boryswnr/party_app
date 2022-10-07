@@ -9,6 +9,7 @@ const Room = () => {
     const [votesToSkip, setVotesToSkip] = useState(2);
     const [guestCanPause, setGuestCanPause] = useState(true);
     const [isHost, setIsHost] = useState(false);
+    const [spotifyAuthenticated, setSpotifyAuthenticated] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const navigate = useNavigate();
 
@@ -24,7 +25,27 @@ const Room = () => {
                 setVotesToSkip(data.votes_to_skip);
                 setGuestCanPause(data.guest_can_pause);
                 setIsHost(data.is_host);
+                if (data.is_host) {
+                    authenticateSpotify();
+                }
             });
+    };
+
+    const authenticateSpotify = () => {
+        console.log("fetching is-authenticated");
+        fetch("/spotify/is-authenticated").then((response) =>
+            response.json().then((data) => {
+                setSpotifyAuthenticated(data.status);
+                if (!data.status) {
+                    console.log("fetching get-auth-url");
+                    fetch("/spotify/get-auth-url").then((response) =>
+                        response.json().then((data) => {
+                            window.location.replace(data.url);
+                        })
+                    );
+                }
+            })
+        );
     };
 
     useEffect(() => {
