@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CreateRoom from "./CreateRoom";
+import MusicPlayer from "../components/MusicPlayer";
 
 const Room = () => {
     const { roomCode } = useParams();
@@ -50,21 +51,17 @@ const Room = () => {
     };
 
     const getCurrentSong = () => {
-        console.log("fetching spotify/current-song");
         fetch("/spotify/current-song")
             .then((response) => {
                 if (!response.ok) {
-                    console.log("response not ok");
                     return {};
                 } else {
-                    console.log("response ok:", response);
                     return response.json();
                 }
             })
             .then((data) => {
                 console.log("setting song");
                 if (data !== undefined) setSong(data);
-                console.log(data);
             });
     };
 
@@ -121,26 +118,29 @@ const Room = () => {
         return renderSettings();
     }
     return (
-        <Box>
+        <Box sx={{ textAlign: "center" }}>
             <Typography variant="h4">Code: {roomCode}</Typography>
 
-            {isHost ? (
+            <MusicPlayer {...song} />
+            <Box mt={1}>
+                {isHost ? (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => setShowSettings(true)}
+                    >
+                        Settings
+                    </Button>
+                ) : null}
+
                 <Button
                     variant="contained"
-                    color="primary"
-                    onClick={() => setShowSettings(true)}
+                    color="secondary"
+                    onClick={() => leaveBtnPressed()}
                 >
-                    Settings
+                    Leave room
                 </Button>
-            ) : null}
-
-            <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => leaveBtnPressed()}
-            >
-                Leave room
-            </Button>
+            </Box>
         </Box>
     );
 };
