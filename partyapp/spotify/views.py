@@ -65,7 +65,7 @@ class CurrentSong(APIView):
         response = execute_spotify_api_request(host, endpoint)
         
         if "error" in response or "item" not in response:
-            return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"Message": "Looks like no song is being played"}, status=status.HTTP_204_NO_CONTENT)
 
         item = response.get("item")
         duration = item.get("duration_ms")
