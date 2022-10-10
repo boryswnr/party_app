@@ -11,6 +11,7 @@ const Room = () => {
     const [isHost, setIsHost] = useState(false);
     const [spotifyAuthenticated, setSpotifyAuthenticated] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
+    const [song, setSong] = useState({});
     const navigate = useNavigate();
 
     const getRoomDetails = () => {
@@ -32,24 +33,48 @@ const Room = () => {
     };
 
     const authenticateSpotify = () => {
-        console.log("fetching is-authenticated");
-        fetch("/spotify/is-authenticated").then((response) =>
-            response.json().then((data) => {
+        fetch("/spotify/is-authenticated")
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
                 setSpotifyAuthenticated(data.status);
                 if (!data.status) {
-                    console.log("fetching get-auth-url");
                     fetch("/spotify/get-auth-url").then((response) =>
                         response.json().then((data) => {
                             window.location.replace(data.url);
                         })
                     );
                 }
+            });
+    };
+
+    const getCurrentSong = () => {
+        console.log("fetching spotify/current-song");
+        fetch("/spotify/current-song")
+            .then((response) => {
+                if (!response.ok) {
+                    console.log("response not ok");
+                    return {};
+                } else {
+                    console.log("response ok:", response);
+                    return response.json();
+                }
             })
-        );
+            .then((data) => {
+                console.log("setting song");
+                if (data !== undefined) setSong(data);
+                console.log(data);
+            });
     };
 
     useEffect(() => {
+        const interval = setInterval(() => {
+            getCurrentSong();
+        }, 1000);
         getRoomDetails();
+
+        return () => clearInterval(interval);
     }, []);
 
     const leaveBtnPressed = () => {
@@ -71,7 +96,6 @@ const Room = () => {
                     textAlign: "center",
                 }}
             >
-                {/* ADD props to CreateRoom */}
                 <CreateRoom
                     votes={votesToSkip}
                     pauseRules={guestCanPause}
@@ -99,14 +123,6 @@ const Room = () => {
     return (
         <Box>
             <Typography variant="h4">Code: {roomCode}</Typography>
-
-            <Typography variant="h6">Votes to skip: {votesToSkip}</Typography>
-
-            <Typography variant="h6">
-                Guests can pause: {guestCanPause ? "Yes" : " No"}
-            </Typography>
-
-            <Typography variant="h6">Host: {isHost ? "Yes" : " No"}</Typography>
 
             {isHost ? (
                 <Button
