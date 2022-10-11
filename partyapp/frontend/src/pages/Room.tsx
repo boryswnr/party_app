@@ -53,15 +53,16 @@ const Room = () => {
     const getCurrentSong = () => {
         fetch("/spotify/current-song")
             .then((response) => {
-                if (!response.ok) {
+                if (!response.ok || response.status == 204) {
                     return {};
                 } else {
                     return response.json();
                 }
             })
             .then((data) => {
-                console.log("setting song");
-                if (data !== undefined) setSong(data);
+                if (data !== undefined) {
+                    setSong(data);
+                }
             });
     };
 
@@ -69,6 +70,7 @@ const Room = () => {
         const interval = setInterval(() => {
             getCurrentSong();
         }, 1000);
+
         getRoomDetails();
 
         return () => clearInterval(interval);

@@ -30,12 +30,12 @@ def update_or_create_user_tokens(session_id, access_token, token_type, expires_i
         tokens = SpotifyToken(user=session_id, access_token=access_token, refresh_token=refresh_token, token_type=token_type, expires_in=expires_in)
         tokens.save()
         
-def is_spotify_suthenticated(session_id):
+def is_spotify_authenticated(session_id):
     tokens = get_user_tokens(session_id)
     if tokens:
         expiry = tokens.expires_in
         if expiry <= timezone.now():
-            refresh_spotify_token(tokens)
+            refresh_spotify_token(session_id)
         return True
         
     return False
@@ -78,3 +78,6 @@ def play_song(session_id):
 
 def pause_song(session_id):
     return execute_spotify_api_request(session_id, "player/pause", put_=True)
+
+def skip_song(session_id):
+    return execute_spotify_api_request(session_id, "player/next", post_=True)

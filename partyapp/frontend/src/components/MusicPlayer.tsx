@@ -15,6 +15,8 @@ type MusicPlayerProps = {
     title?: string;
     artist?: string;
     is_playing?: boolean;
+    votes?: number;
+    votes_required?: number;
 };
 
 const MusicPlayer = ({
@@ -24,6 +26,8 @@ const MusicPlayer = ({
     title,
     artist,
     is_playing,
+    votes,
+    votes_required,
 }: MusicPlayerProps) => {
     const songProgress =
         time !== undefined && duration !== undefined
@@ -44,6 +48,14 @@ const MusicPlayer = ({
             headers: { "Content-Type": "application/json" },
         };
         fetch("/spotify/play", requestOptions);
+    };
+
+    const skipSong = () => {
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+        };
+        fetch("/spotify/skip", requestOptions);
     };
 
     return (
@@ -76,7 +88,8 @@ const MusicPlayer = ({
                         >
                             {is_playing ? <Pause /> : <PlayArrow />}
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => skipSong()}>
+                            {votes} / {votes_required}
                             <SkipNext />
                         </IconButton>
                     </Box>
