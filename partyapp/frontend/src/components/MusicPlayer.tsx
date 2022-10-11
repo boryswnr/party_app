@@ -30,6 +30,22 @@ const MusicPlayer = ({
             ? (time / duration) * 100
             : 0;
 
+    const pauseSong = () => {
+        const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+        };
+        fetch("/spotify/pause", requestOptions);
+    };
+
+    const playSong = () => {
+        const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+        };
+        fetch("/spotify/play", requestOptions);
+    };
+
     return (
         <Card>
             <Box
@@ -53,7 +69,11 @@ const MusicPlayer = ({
                         {artist}
                     </Typography>
                     <Box>
-                        <IconButton>
+                        <IconButton
+                            onClick={() => {
+                                is_playing ? pauseSong() : playSong();
+                            }}
+                        >
                             {is_playing ? <Pause /> : <PlayArrow />}
                         </IconButton>
                         <IconButton>
