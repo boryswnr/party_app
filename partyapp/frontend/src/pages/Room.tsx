@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import CreateRoom from "./CreateRoom";
 import MusicPlayer from "../components/MusicPlayer";
 import { renderSettingsLayout } from "../components/muiSxStyling";
+import { defaultSong } from "../components/defaultSong";
 
 const Room = () => {
     const { roomCode } = useParams();
@@ -12,7 +13,7 @@ const Room = () => {
     const [guestCanPause, setGuestCanPause] = useState(true);
     const [isHost, setIsHost] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
-    const [song, setSong] = useState({});
+    const [song, setSong] = useState(defaultSong);
     const navigate = useNavigate();
 
     const getRoomDetails = () => {
@@ -53,7 +54,7 @@ const Room = () => {
         fetch("/spotify/current-song")
             .then((response) => {
                 if (!response.ok || response.status == 204) {
-                    return {};
+                    return defaultSong;
                 } else {
                     return response.json();
                 }
@@ -61,6 +62,7 @@ const Room = () => {
             .then((data) => {
                 if (data !== undefined) {
                     setSong(data);
+                    document.body.style.backgroundImage = `url('${data.image_url}')`;
                 }
             });
     };
@@ -69,7 +71,7 @@ const Room = () => {
         const interval = setInterval(() => {
             getCurrentSong();
         }, 1000);
-
+        setAppBackground();
         getRoomDetails();
 
         return () => clearInterval(interval);
@@ -83,6 +85,10 @@ const Room = () => {
         fetch("/api/leave-room", requestOptions).then((_response) => {
             navigate("/");
         });
+    };
+
+    const setAppBackground = () => {
+        document.body.style.backgroundImage = `url('${song.image_url}')`;
     };
 
     const renderSettings = () => {
