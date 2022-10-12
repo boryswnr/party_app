@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CreateRoom from "./CreateRoom";
 import MusicPlayer from "../components/MusicPlayer";
+import { renderSettingsLayout } from "../components/muiSxStyling";
 
 const Room = () => {
     const { roomCode } = useParams();
     const [votesToSkip, setVotesToSkip] = useState(2);
     const [guestCanPause, setGuestCanPause] = useState(true);
     const [isHost, setIsHost] = useState(false);
-    const [spotifyAuthenticated, setSpotifyAuthenticated] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [song, setSong] = useState({});
     const navigate = useNavigate();
@@ -39,7 +39,6 @@ const Room = () => {
                 return response.json();
             })
             .then((data) => {
-                setSpotifyAuthenticated(data.status);
                 if (!data.status) {
                     fetch("/spotify/get-auth-url").then((response) =>
                         response.json().then((data) => {
@@ -88,13 +87,7 @@ const Room = () => {
 
     const renderSettings = () => {
         return (
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    textAlign: "center",
-                }}
-            >
+            <Box sx={renderSettingsLayout}>
                 <CreateRoom
                     votes={votesToSkip}
                     pauseRules={guestCanPause}

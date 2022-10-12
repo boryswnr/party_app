@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { Box } from "@mui/system";
 import { Button, TextField, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { joinRoomLayout } from "../components/muiSxStyling";
 
 const JoinRoom = () => {
     const [roomCode, setRoomCode] = useState("");
@@ -31,14 +32,7 @@ const JoinRoom = () => {
     };
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
-            }}
-        >
+        <Box sx={joinRoomLayout}>
             <Typography mb={3} variant="h4" component="h4">
                 Join a room
             </Typography>

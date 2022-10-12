@@ -17,6 +17,7 @@ import {
     RenderCreateButtons,
     RenderUpdateButtons,
 } from "../components/Buttons";
+import { centerText, createRoomLayout, flexColumn } from "../components/muiSxStyling";
 
 type CreateRoomProps = {
     votes?: number;
@@ -94,15 +95,7 @@ const CreateRoom = ({
     const editOrCreate = editingSettings ? "Edit a room" : "Create a Room";
 
     return (
-        <Box
-            sx={{
-                display: "flex",
-                flexDirection: "column",
-                textAlign: "center",
-                alignItems: "center",
-                margin: "0 auto",
-            }}
-        >
+        <Box sx={createRoomLayout}>
             <Box>
                 <Collapse in={successMsg !== "" || errorMsg !== ""}>
                     {successMsg ? (
@@ -117,7 +110,7 @@ const CreateRoom = ({
             </Box>
             <Box>
                 <FormControl component="fieldset">
-                    <FormHelperText sx={{ textAlign: "center" }}>
+                    <FormHelperText sx={centerText}>
                         Guest control of playback
                     </FormHelperText>
                     <RadioGroup
@@ -149,17 +142,12 @@ const CreateRoom = ({
                         defaultValue={votesToSkip}
                         inputProps={{ min: 1, style: { textAlign: "center" } }}
                     />
-                    <FormHelperText sx={{ textAlign: "center" }}>
+                    <FormHelperText sx={centerText}>
                         Votes required to skip a song
                     </FormHelperText>
                 </FormControl>
             </Box>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                }}
-            >
+            <Box sx={flexColumn}>
                 {editingSettings ? (
                     <RenderUpdateButtons
                         handleUpdateButtonPressed={handleUpdateButtonPressed}
@@ -172,12 +160,6 @@ const CreateRoom = ({
             </Box>
         </Box>
     );
-};
-
-CreateRoom.defaultProps = {
-    votes: 2,
-    pauseRule: true,
-    editing: false,
 };
 
 export default CreateRoom;

@@ -7,6 +7,7 @@ import {
     Typography,
     IconButton,
 } from "@mui/material";
+import { musicPlayerLayout } from "./muiSxStyling";
 
 type MusicPlayerProps = {
     time?: number;
@@ -60,22 +61,11 @@ const MusicPlayer = ({
 
     return (
         <Card>
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                }}
-            >
+            <Box sx={musicPlayerLayout}>
                 <Box sx={{ maxWidth: "40%" }}>
                     <img src={image_url} height="100%" width="100%" />
                 </Box>
-                <Box
-                    sx={{
-                        width: "60%",
-                    }}
-                >
+                <Box sx={{ width: "60%" }}>
                     <Typography variant="h5">{title}</Typography>
                     <Typography color="textSecondary" variant="subtitle1">
                         {artist}
