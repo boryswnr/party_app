@@ -1,6 +1,7 @@
 :root {
     --main-font-color: #ffffff;
     --supplement-font-color: #000000;
+    --background-overlay-color: #ffffff8c;
 }
 
 html,
@@ -8,6 +9,9 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    background-image: url("https://i.picsum.photos/id/39/3456/2304.jpg?hmac=cc_VPxzydwTUbGEtpsDeo2NxCkeYQrhTLqw4TFo-dIg");
+    background-repeat: no-repeat;
+    background-size: cover;
     color: var(--supplement-font-color);
     background-repeat: no-repeat;
     background-size: cover;
@@ -17,7 +21,7 @@ body {
 
 body::after {
     content: "";
-    background-color: #ffffff8c;
+    background-color: var(--background-overlay-color);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -37,4 +41,10 @@ body::after {
     height: 100%;
     position: absolute;
     z-index: 5;
+}
+
+.white-background {
+    padding: 30px;
+    background-color: #ffffffc7;
+    border-radius: 15px;
 }

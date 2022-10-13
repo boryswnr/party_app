@@ -32,7 +32,7 @@ const JoinRoom = () => {
     };
 
     return (
-        <Box sx={joinRoomLayout}>
+        <Box sx={joinRoomLayout} className="white-background">
             <Typography mb={3} variant="h4" component="h4">
                 Join a room
             </Typography>

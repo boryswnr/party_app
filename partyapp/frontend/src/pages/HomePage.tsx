@@ -17,7 +17,7 @@ function HomePage() {
     }, []);
 
     return (
-        <Box>
+        <Box className="white-background">
             <Box>
                 <Typography variant="h3">House party</Typography>
             </Box>

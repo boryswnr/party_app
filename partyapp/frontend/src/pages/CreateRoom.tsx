@@ -17,7 +17,11 @@ import {
     RenderCreateButtons,
     RenderUpdateButtons,
 } from "../components/Buttons";
-import { centerText, createRoomLayout, flexColumn } from "../components/muiSxStyling";
+import {
+    centerText,
+    createRoomLayout,
+    flexColumn,
+} from "../components/muiSxStyling";
 
 type CreateRoomProps = {
     votes?: number;
@@ -95,7 +99,7 @@ const CreateRoom = ({
     const editOrCreate = editingSettings ? "Edit a room" : "Create a Room";
 
     return (
-        <Box sx={createRoomLayout}>
+        <Box sx={createRoomLayout} className="white-background">
             <Box>
                 <Collapse in={successMsg !== "" || errorMsg !== ""}>
                     {successMsg ? (

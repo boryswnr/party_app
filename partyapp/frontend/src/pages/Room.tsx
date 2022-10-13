@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import CreateRoom from "./CreateRoom";
 import MusicPlayer from "../components/MusicPlayer";
-import { renderSettingsLayout } from "../components/muiSxStyling";
+import { renderSettingsLayout, roomLayout } from "../components/muiSxStyling";
 import { defaultSong } from "../components/defaultSong";
 
 const Room = () => {
@@ -119,7 +119,7 @@ const Room = () => {
         return renderSettings();
     }
     return (
-        <Box sx={{ textAlign: "center" }}>
+        <Box sx={{ textAlign: "center" }} className="white-background">
             <Typography variant="h4">Code: {roomCode}</Typography>
 
             <MusicPlayer {...song} />

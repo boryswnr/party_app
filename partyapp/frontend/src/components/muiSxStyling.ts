@@ -39,3 +39,7 @@ export const joinRoomLayout = {
     justifyContent: "space-between",
     alignItems: "center",
 };
+
+export const roomLayout = {
+    textAlign: "center",
+};
