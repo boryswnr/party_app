@@ -1,7 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CreateRoom from "./CreateRoom";
 import MusicPlayer from "../components/MusicPlayer";
 import { renderSettingsLayout, roomLayout } from "../components/muiSxStyling";
@@ -14,6 +14,7 @@ const Room = () => {
     const [isHost, setIsHost] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [song, setSong] = useState(defaultSong);
+    const [numOfTries, setNumOfTries] = useState(0);
     const navigate = useNavigate();
 
     const getRoomDetails = () => {

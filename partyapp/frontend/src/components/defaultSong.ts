@@ -11,11 +11,6 @@ export const defaultSong = {
     votes_required: 2,
 };
 
-const suggestedPhotos = [
-    "https://i.picsum.photos/id/39/3456/2304.jpg?hmac=cc_VPxzydwTUbGEtpsDeo2NxCkeYQrhTLqw4TFo-dIg",
-    "https://i.picsum.photos/id/117/1544/1024.jpg?hmac=xFWtVUv1xkFVVidifC3drKerU_k_za4w28fv5etvxRc",
-];
-
 export type defaultSongType = {
     artist: string;
     duration: number;
