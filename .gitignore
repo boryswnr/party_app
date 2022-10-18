@@ -5,3 +5,8 @@ partyapp/spotify/credentials.py
 partyapp/frontend/static/frontend/main.js.LICENSE.txt
 partyapp/frontend/static/frontend/*.js
 partyapp/frontend/static/frontend/*/*.js
+
+# database
+db.sqlite3
+
+*.pyc
