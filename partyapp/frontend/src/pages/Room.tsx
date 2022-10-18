@@ -1,6 +1,6 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateRoom from "./CreateRoom";
 import MusicPlayer from "../components/MusicPlayer";
@@ -14,58 +14,37 @@ const Room = () => {
     const [isHost, setIsHost] = useState(false);
     const [showSettings, setShowSettings] = useState(false);
     const [song, setSong] = useState(defaultSong);
-    const [numOfTries, setNumOfTries] = useState(0);
     const navigate = useNavigate();
 
-    const getRoomDetails = () => {
-        fetch("/api/get-room" + "?code=" + roomCode)
-            .then((response) => {
-                if (!response.ok) {
-                    navigate("/");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setVotesToSkip(data.votes_to_skip);
-                setGuestCanPause(data.guest_can_pause);
-                setIsHost(data.is_host);
-                if (data.is_host) {
-                    authenticateSpotify();
-                }
-            });
+    const getRoomDetails = async () => {
+        const getRoom = await fetch("/api/get-room" + "?code=" + roomCode);
+        const data = await (getRoom.ok ? getRoom.json() : navigate("/"));
+        setVotesToSkip(data.votes_to_skip);
+        setGuestCanPause(data.guest_can_pause);
+        setIsHost(data.is_host);
+        if (data.is_host) {
+            authenticateSpotify();
+        }
     };
 
-    const authenticateSpotify = () => {
-        fetch("/spotify/is-authenticated")
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                if (!data.status) {
-                    fetch("/spotify/get-auth-url").then((response) =>
-                        response.json().then((data) => {
-                            window.location.replace(data.url);
-                        })
-                    );
-                }
-            });
+    const authenticateSpotify = async () => {
+        const isAuthenticated = await (
+            await fetch("/spotify/is-authenticated")
+        ).json();
+        if (!isAuthenticated.status) {
+            const data = await (await fetch("/spotify/get-auth-url")).json();
+            window.location.replace(data.url);
+        }
     };
 
-    const getCurrentSong = () => {
-        fetch("/spotify/current-song")
-            .then((response) => {
-                if (!response.ok || response.status == 204) {
-                    return defaultSong;
-                } else {
-                    return response.json();
-                }
-            })
-            .then((data) => {
-                if (data !== undefined) {
-                    setSong(data);
-                    document.body.style.backgroundImage = `url('${data.image_url}')`;
-                }
-            });
+    const getCurrentSong = async () => {
+        const song = await fetch("/spotify/current-song");
+        if (!song.ok || song.status == 204) {
+            return defaultSong;
+        }
+        const songJson = await song.json();
+        setSong(songJson);
+        document.body.style.backgroundImage = `url('${songJson.image_url}')`;
     };
 
     useEffect(() => {
