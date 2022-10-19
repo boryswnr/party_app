@@ -1,5 +1,4 @@
 from http.client import HTTPResponse
-from tkinter import N
 from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.views import APIView
