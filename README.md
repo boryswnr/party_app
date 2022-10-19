@@ -11,7 +11,7 @@ Started in September 2022, still in progress.
 Technologies used:
 
 -   Python (3.10)
--   Django (4.0.3)
+-   Django (4.0.7)
 -   TypeScript (4.8.3)
 -   React (18.2.0)
 
